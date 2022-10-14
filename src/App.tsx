@@ -30,6 +30,7 @@ interface IAppState {
   message: string
   path: string
   displayCounts: boolean
+  displayCountsRow: boolean[]
   tableData: string[][]
 }
 
@@ -37,6 +38,7 @@ export class App extends Component<{}, {}> {
   public state: IAppState = {
     message: `Click button to choose a random file from the user's system`,
     displayCounts: false,
+    displayCountsRow: [],
     path: defPath,
     tableData: []
   }
@@ -48,20 +50,32 @@ export class App extends Component<{}, {}> {
 
   public getCabinets = () => {
     eel.get_cabinet_counts()((res: {data: string[][], dir: string}) => {
-      console.log(res)
+      const temp: boolean[] = new Array(res.data.length).fill(false);
       this.setState({
         path: res.dir,
+        displayCountsRow: temp,
         tableData: res.data})
     })
+  }
+
+  public setCabinetDropdown(idx: number) {
+    const temp: boolean[] = this.state.displayCountsRow;
+    temp[idx] = !temp[idx];
+    this.setState({displayCountsRow: temp});
   }
 
   public buildTable(total: boolean) {
     var tblRows: Object[] = [];
 
-    this.state.tableData.forEach(function(x) {
+    this.setCabinetDropdown = this.setCabinetDropdown.bind(this);
+    const dropdownFunc: Function = this.setCabinetDropdown;
+
+    const rowFlags: boolean[] = this.state.displayCountsRow
+
+    this.state.tableData.forEach(function(x, idx) {
       let trClass: string = "main";
       if (x[0] === " ") {
-        if (total === false) {
+        if (rowFlags[idx] === false) {
           return;
         } else {
           trClass = "sub";
@@ -71,6 +85,9 @@ export class App extends Component<{}, {}> {
         <td>{x[0]}</td>
         <td>{x[1]}</td>
         <td>{x[2]}</td>
+        <td> <button className='App-button' onClick={() => {
+          dropdownFunc(idx)
+        }}/> </td>
       </tr>)
     })
 

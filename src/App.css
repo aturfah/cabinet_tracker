@@ -1,0 +1,50 @@
+.App {
+  background-color: white;
+  color: black;
+  text-align: center;
+}
+
+.App-header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  font-size: 20px;
+}
+
+.App-header p {
+  font-size: 14px;
+}
+
+.App-button {
+  background-color: #61dafb;
+  border-radius: 5px;
+  color: #282c34;
+  font-size: 20px;
+  padding: 4px;
+  margin: 5px;
+}
+
+.App-button:hover {
+  background-color: #7ce3ff;
+  cursor: pointer;
+}
+
+tr.main {
+  font-size: 12pt;
+  /* padding: 5px; */
+}
+
+.main td {
+  border-top: 1px solid black;
+  border-collapse: collapse;
+  padding: 0;
+  margin: 0;
+}
+
+tr.sub {
+  font-style: italic;
+  font-size: 11pt;
+  padding: 5px;
+}
